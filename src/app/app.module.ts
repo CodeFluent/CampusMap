@@ -13,8 +13,8 @@ import { SubscribePage } from '../pages/subscribe/subscribe';
 @NgModule({
   declarations: [
     MyApp,
-    FeedPage,
     HomePage,
+    FeedPage,
     SubscribePage,
     TabsPage
   ],
