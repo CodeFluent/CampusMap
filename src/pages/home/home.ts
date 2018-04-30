@@ -38,4 +38,8 @@ export class HomePage {
     //   .openPopup();
 
   }
+
+  ionViewDidLeave() {
+    this.map.remove();
+  }
 }

@@ -9,6 +9,9 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { FeedPage } from '../pages/feed/feed';
 import { SubscribePage } from '../pages/subscribe/subscribe';
+import { FeedDataProvider } from '../providers/feed-data';
+import { DatasetsProvider } from '../providers/datasets';
+import { UserDataProvider } from '../providers/user-data';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { SubscribePage } from '../pages/subscribe/subscribe';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    FeedDataProvider,
+    DatasetsProvider,
+    UserDataProvider
   ]
 })
 export class AppModule { }
