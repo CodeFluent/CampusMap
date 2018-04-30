@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import leaflet from 'leaflet';
+import L from 'leaflet';
 
 @Component({
   selector: 'page-home',
@@ -26,11 +26,16 @@ export class HomePage {
   }
 
   loadMap() {
-    this.map = leaflet.map("map").fitWorld();
-    leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      center: [33.753068, -84.385282]
-    }).addTo(this.map);
-  }
 
+    this.map = L.map('map').setView([33.75268, -84.38540], 17);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
+
+    // L.marker([51.5, -0.09]).addTo(this.map)
+    //   .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    //   .openPopup();
+
+  }
 }
