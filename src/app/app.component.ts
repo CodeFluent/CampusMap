@@ -4,7 +4,7 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, AlertController } from 'ionic-angular';
+import { Nav, Platform, AlertController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -13,7 +13,6 @@ import { HomePage } from '../pages/home/home';
 import { FeedPage } from '../pages/feed/feed';
 import { SubscribePage } from '../pages/subscribe/subscribe';
 
-import { LogoutPage } from '../pages/logout/logout';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 
@@ -23,12 +22,11 @@ import { UserDataProvider } from '../providers/user-data';
 export interface PageInterface {
   title: string;
   name: string;
-  component: any;
   icon: string;
+  component?: any;
   index?: number;
   tabName?: string;
   tabComponent?: any;
-
 }
 
 @Component({
@@ -45,7 +43,7 @@ export class CampusMap {
     { title: 'Subscriptions', name: 'SubscribePage', component: TabsPage, tabComponent: SubscribePage, index: 2, icon: 'settings' }
   ];
   loggedInPages: PageInterface[] = [
-    { title: 'Logout', name: 'LogoutPage', component: LogoutPage, icon: 'log-out' }
+    { title: 'Logout', name: 'LogoutPage', icon: 'log-out' }
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
@@ -53,6 +51,7 @@ export class CampusMap {
   ];
 
   constructor(
+    public menu: MenuController,
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
@@ -62,6 +61,8 @@ export class CampusMap {
     this.platformReady();
 
     // load feed data
+
+    this.enableMenu();
 
   }
 
@@ -77,11 +78,22 @@ export class CampusMap {
           text: 'Logout',
           handler: () => {
             this.userData.logout();
+            this.enableMenu();
           }
         }
       ]
     });
     alert.present();
+  }
+
+  enableMenu() {
+    if (this.userData.IS_LOGGED_IN === true) {
+      console.log("menu login");
+      this.menu.enable(true, 'loggedInMenu');
+    } else {
+      console.log("menu logout");
+      this.menu.enable(true, 'loggedOutMenu');
+    }
   }
 
   openPage(page: PageInterface) {

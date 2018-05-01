@@ -9,13 +9,21 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class UserDataProvider {
+  IS_LOGGED_IN: boolean = true;
 
   constructor(public http: HttpClient) {
-    console.log('Hello UserDataProvider Provider');
+
+  }
+
+
+  login() {
+    console.log("LoggedIn");
+    this.IS_LOGGED_IN = true;
   }
 
   logout() {
     console.log("LoggedOut");
+    this.IS_LOGGED_IN = false;
   }
 
 }

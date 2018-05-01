@@ -10,7 +10,8 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { FeedPage } from '../pages/feed/feed';
 
-import { LogoutPage } from '../pages/logout/logout';
+import { LoginPage } from '../pages/login/login';
+import { SignupPage } from '../pages/signup/signup';
 
 
 import { SubscribePage } from '../pages/subscribe/subscribe';
@@ -21,8 +22,10 @@ import { UserDataProvider } from '../providers/user-data';
 @NgModule({
   declarations: [
     CampusMap,
-    HomePage,
     FeedPage,
+    HomePage,
+    LoginPage,
+    SignupPage,
     SubscribePage,
     TabsPage
   ],
@@ -31,9 +34,11 @@ import { UserDataProvider } from '../providers/user-data';
     HttpClientModule,
     IonicModule.forRoot(CampusMap, {}, {
       links: [
+        { component: FeedPage, name: 'FeedPage', segment: 'feeds' },
+        { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: TabsPage, name: 'TabsPage', segment: 'tabs-page' },
         { component: HomePage, name: 'Mainmap', segment: 'main-map' },
-        { component: FeedPage, name: 'FeedPage', segment: 'feeds' },
+        { component: SignupPage, name: 'SignupPage', segment: 'signup' },
         { component: SubscribePage, name: 'SubscribePage', segment: 'subscriptions' }
       ]
     })
@@ -43,6 +48,8 @@ import { UserDataProvider } from '../providers/user-data';
     CampusMap,
     FeedPage,
     HomePage,
+    LoginPage,
+    SignupPage,
     SubscribePage,
     TabsPage
   ],
