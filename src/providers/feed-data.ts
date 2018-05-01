@@ -1,17 +1,28 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the FeedDataProvider provider.
+const env = "http://localhost:5984/";
+// make sure in local.ini has cors enabled and allows localhost as origin
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class FeedDataProvider {
 
+  feeditems: any;
+
   constructor(public http: HttpClient) {
-    console.log('Hello FeedDataProvider Provider');
   }
 
+  getFeedItems() {
+    let url = env + "feed/_design/feed/_view/foo";
+
+    return this.http.get(url).map(res => res)
+      .subscribe(
+        data => {
+          this.feeditems = data;
+        },
+        err => console.log(err),
+    );
+  }
 }

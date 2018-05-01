@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import L from 'leaflet';
+import { unescapeIdentifier } from '@angular/compiler';
 
 @Component({
   selector: 'page-home',
@@ -10,15 +11,8 @@ export class HomePage {
   @ViewChild('map') mapContainer: ElementRef;
   map: any;
 
-  drawerOptions: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
 
-  constructor(public navCtrl: NavController) {
-    this.drawerOptions = {
-      handleHeight: 50,
-      thresholdFromBottom: 200,
-      thresholdFromTop: 200,
-      bounceBack: true
-    };
   }
 
   ionViewDidEnter() {
@@ -33,9 +27,18 @@ export class HomePage {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
 
-    // L.marker([51.5, -0.09]).addTo(this.map)
-    //   .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    //   .openPopup();
+    let geo = this.navParams.get('geopoint');
+    let title = this.navParams.get('title');
+
+    if (geo && geo !== undefined) {
+      if (title === undefined || title === '') {
+        title = "Location";
+      }
+      L.marker([geo[0], geo[1]]).addTo(this.map)
+        .bindPopup('<p>' + title + '</p>')
+        .openPopup();
+    }
+
 
   }
 
