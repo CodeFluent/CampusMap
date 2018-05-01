@@ -15,8 +15,7 @@ export class UserDataProvider {
 
   }
 
-
-  login() {
+  login(username: string, password: string) {
     console.log("LoggedIn");
     this.IS_LOGGED_IN = true;
   }
@@ -24,6 +23,10 @@ export class UserDataProvider {
   logout() {
     console.log("LoggedOut");
     this.IS_LOGGED_IN = false;
+  }
+
+  signup(username: string, password: string, role: string) {
+
   }
 
 }
