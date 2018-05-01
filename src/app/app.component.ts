@@ -1,5 +1,10 @@
+/**
+ * From the ionic-conference-app setup.
+ *
+ */
+
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -50,9 +55,54 @@ export class CampusMap {
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen) {
+    public splashScreen: SplashScreen,
+    public userData: UserDataProvider,
+    private alertCtrl: AlertController) {
 
     this.platformReady();
+
+    // load feed data
+
+  }
+
+  alertLogout() {
+    let alert = this.alertCtrl.create({
+      title: 'Do you wish to logout?',
+      buttons: [
+        {
+          text: 'Dismiss',
+          role: 'cancel'
+        },
+        {
+          text: 'Logout',
+          handler: () => {
+            this.userData.logout();
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  openPage(page: PageInterface) {
+    let params: {};
+
+    if (page.index) {
+      params = { tabIndex: page.index };
+    }
+
+    if (this.nav.getActiveChildNavs().length && page.index != undefined) {
+      this.nav.getActiveChildNav()[0].select(page.index);
+    } else {
+      this.nav.setRoot(page.name, params).catch((err: any) => {
+        console.log("Error with settings nav...", err);
+      });
+    }
+
+    if (page.name === "LogoutPage") {
+      this.alertLogout();
+    }
+
   }
 
   platformReady() {

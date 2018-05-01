@@ -14,4 +14,8 @@ export class UserDataProvider {
     console.log('Hello UserDataProvider Provider');
   }
 
+  logout() {
+    console.log("LoggedOut");
+  }
+
 }
