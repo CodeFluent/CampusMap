@@ -19,8 +19,33 @@ export class UserDataProvider {
   }
 
   login(username: string, password: string) {
-    console.log("LoggedIn");
     this.IS_LOGGED_IN = true;
+
+    let url = env + "_session";
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'x-www-form-urlencoded'
+      })
+    };
+
+    let data;
+    data = {
+      name: username,
+      password: password
+    };
+
+    data = JSON.stringify(data);
+
+    console.log(data);
+
+    return this.http.post(url, data, httpOptions).map(res => res)
+      .subscribe(
+        data => console.log(data),
+        err => console.log(err),
+        () => {
+          console.log("LoggedIn");
+        }
+      );
   }
 
   logout() {
@@ -53,10 +78,11 @@ export class UserDataProvider {
     return this.http.put(url, data, httpOptions).map(res => res)
       .subscribe(
         err => console.log(err),
-        () => console.log('LoggedIn')
+        () => {
+          this.login(username, password);
+          console.log("Signed up!");
+        }
       );
-
-
   }
 
 }
