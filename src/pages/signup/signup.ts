@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import { UserDataProvider } from '../../providers/user-data';
 import { TabsPage } from '../tabs/tabs';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the SignupPage page.
@@ -18,7 +20,8 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class SignupPage {
   signup: any = { username: '', password: '', role: '' };
-  submitted = false;
+  submitted: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     public navCtrl: NavController,
@@ -32,8 +35,8 @@ export class SignupPage {
 
     if (form.valid) {
       this.userData.signup(this.signup.username, this.signup.password, this.signup.role);
-      this.navCtrl.push(TabsPage);
     }
+    this.navCtrl.push(TabsPage);
 
   }
 
